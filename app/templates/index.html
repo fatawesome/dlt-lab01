@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .posts {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+  .post-container {
+    max-width: 200px;
+    border: 1px solid black;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  .post__header {
+    padding: 0 12px;
+    border-bottom: 1px solid black
+  }
+  .post__author {
+    font-weight: 600;
+    color: green;
+    font-size: 18px;
+    line-height: 30px;
+  }
+  .post__body {
+    padding: 0 12px;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  input, textarea, button {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+</style>
+<div class="form-container">
+  <form action="/submit" id="message-form" method="post" class="form">
+    <label for="author">
+      <input id="author" type="text" name="author" placeholder="Your name">
+    </label>
+
+    <label for="message-form_content">
+      <textarea
+        name="content"
+        id="message-form_content"
+        cols="30"
+        rows="10"
+        placeholder="Write message here"
+      ></textarea>
+    </label>
+
+    <input type="submit" value="Send">
+  </form>
+</div>
+
+<a href="{{ peer_address }}/mine" target="_blank">
+  <button>Mine</button>
+</a>
+
+<a href="/">
+  <button>Sync</button>
+</a>
+
+<div class="posts">
+  {% for post in posts %}
+  <div class="post-container">
+    <div class="post__header">
+      <span class="post__author">
+        {{ post.author }}
+      </span>
+      <span class="post__time">
+        posted at <i>{{ render_time(post.timestamp) }}</i>
+      </span>
+    </div>
+    <div class="post__body">
+      <p>{{ post.content }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
